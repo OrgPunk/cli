@@ -26,31 +26,31 @@ orgpunk-config = { path = "crates/config" }
 orgpunk-repo = { path = "crates/repo" }
 # external
 anyhow = "1"
-base64 = "0.22"
-chacha20poly1305 = "0.10"
+base64 = "0.23"
+chacha20poly1305 = "0.11"
 clap = { version = "4.5", features = ["derive", "env"] }
 clap_complete = { version = "4.6", features = ["unstable-dynamic"] }
 flate2 = "1"
 gix = { version = "0.89", default-features = false, features = ["sha1", "status", "index"] }
 globset = "0.4"
 ignore = "0.4"
-jsonwebtoken = "9"
+jsonwebtoken = "10"
 keyring = { version = "3", features = ["apple-native", "windows-native", "async-secret-service", "async-io", "crypto-rust"] }
-rand = "0.8"
+rand = "0.10"
 regex = "1"
-roxmltree = "0.20"
+roxmltree = "0.21"
 reqwest = { version = "0.12", default-features = false, features = ["blocking", "json", "multipart", "rustls-tls"] }
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
-sha2 = "0.10"
+sha2 = "0.11"
 tempfile = "3"
 thiserror = "2"
-toml = "0.8"
-toml_edit = "0.22"
+toml = "1.1"
+toml_edit = "0.25"
 url = "2"
 walkdir = "2"
 webbrowser = "1"
-zip = { version = "2", default-features = false, features = ["deflate"] }
+zip = { version = "7", default-features = false, features = ["deflate"] }
 
 [workspace.lints.rust]
 unsafe_code = "forbid"
