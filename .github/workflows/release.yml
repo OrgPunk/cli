@@ -31,7 +31,7 @@ jobs:
             os: windows-latest
             exe: .exe
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
       - name: Toolchain
         shell: bash
         run: |
@@ -57,7 +57,7 @@ jobs:
           else
             tar -czf "dist/opk-${{ matrix.target }}.tar.gz" -C "$dir" opk -C "$GITHUB_WORKSPACE" LICENSE
           fi
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: opk-${{ matrix.target }}
           path: dist/*
@@ -68,7 +68,7 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           path: dist
           merge-multiple: true
