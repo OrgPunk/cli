@@ -21,7 +21,7 @@ jobs:
     name: check
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
       - name: Toolchain
         run: rustup toolchain install
       - uses: Swatinem/rust-cache@v2
@@ -40,11 +40,11 @@ jobs:
     name: SDR parity
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
       - name: Toolchain
         run: rustup toolchain install
       - uses: Swatinem/rust-cache@v2
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: 22
           cache: npm
@@ -53,7 +53,7 @@ jobs:
         working-directory: scripts/parity
         run: npm ci --no-fund --no-audit
       - name: Corpus cache
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: target/corpus
           key: corpus-${{ hashFiles('scripts/parity/corpus.txt') }}
@@ -85,7 +85,7 @@ jobs:
             os: windows-latest
             exe: .exe
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
       - name: Toolchain
         shell: bash
         run: |
@@ -102,7 +102,7 @@ jobs:
       - name: Smoke
         shell: bash
         run: ./target/${{ matrix.target }}/release/opk${{ matrix.exe }} --version
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: opk-${{ matrix.target }}
           path: target/${{ matrix.target }}/release/opk${{ matrix.exe }}
