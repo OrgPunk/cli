@@ -1,0 +1,32 @@
+[package]
+name = "orgpunk-deploy"
+description = "opk deploy scenario"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+publish.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[package.metadata.orgpunk]
+layer = "scenario"
+
+[dependencies]
+orgpunk-convert.workspace = true
+orgpunk-sfapi.workspace = true
+orgpunk-auth.workspace = true
+orgpunk-config.workspace = true
+orgpunk-repo.workspace = true
+tempfile.workspace = true
+flate2.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+thiserror.workspace = true
+walkdir.workspace = true
+zip.workspace = true
+
+[dev-dependencies]
+tempfile.workspace = true
+
+[lints]
+workspace = true

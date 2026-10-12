@@ -1,0 +1,30 @@
+[package]
+name = "orgpunk-convert"
+description = "source <-> mdapi conversion"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+publish.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[package.metadata.orgpunk]
+layer = "core"
+
+[dependencies]
+globset.workspace = true
+ignore.workspace = true
+regex.workspace = true
+roxmltree.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+orgpunk-config.workspace = true
+thiserror.workspace = true
+walkdir.workspace = true
+zip.workspace = true
+
+[dev-dependencies]
+tempfile.workspace = true
+
+[lints]
+workspace = true

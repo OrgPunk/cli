@@ -1,0 +1,11 @@
+{
+  "name": "orgpunk-parity",
+  "private": true,
+  "description": "SDR parity check for opk's source -> mdapi conversion",
+  "type": "module",
+  "dependencies": {
+    "@salesforce/source-deploy-retrieve": "13.4.5",
+    "fast-xml-parser": "5.7.3",
+    "jszip": "3.10.1"
+  }
+}

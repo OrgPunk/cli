@@ -1,0 +1,21 @@
+[package]
+name = "orgpunk-env"
+description = "Environments and protect policies"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+publish.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[package.metadata.orgpunk]
+layer = "scenario"
+
+[dependencies]
+orgpunk-auth.workspace = true
+orgpunk-config.workspace = true
+orgpunk-repo.workspace = true
+globset.workspace = true
+
+[lints]
+workspace = true

@@ -1,0 +1,98 @@
+{
+   "deployOptions" : null,
+   "deployResult" : {
+      "canceledBy" : null,
+      "canceledByName" : null,
+      "checkOnly" : true,
+      "completedDate" : "2026-10-11T14:20:21.000+0000",
+      "createdBy" : "005fj00000BqVxR",
+      "createdByName" : "Test User",
+      "createdDate" : "2026-10-11T14:20:18.000+0000",
+      "details" : {
+         "componentFailures" : [
+            {
+               "changed" : false,
+               "columnNumber" : 5,
+               "componentType" : "ApexClass",
+               "created" : false,
+               "createdDate" : "2026-10-11T14:20:20.000+0000",
+               "deleted" : false,
+               "fileName" : "classes/SfrSpikeBroken.cls",
+               "fullName" : "SfrSpikeBroken",
+               "id" : null,
+               "lineNumber" : 4,
+               "problem" : "Missing ';' at '}'",
+               "problemType" : "Error",
+               "success" : false
+            },
+            {
+               "changed" : false,
+               "columnNumber" : 9,
+               "componentType" : "ApexClass",
+               "created" : false,
+               "createdDate" : "2026-10-11T14:20:20.000+0000",
+               "deleted" : false,
+               "fileName" : "classes/SfrSpikeBroken.cls",
+               "fullName" : "SfrSpikeBroken",
+               "id" : null,
+               "lineNumber" : 3,
+               "problem" : "Illegal conversion from String to Integer",
+               "problemType" : "Error",
+               "success" : false
+            }
+         ],
+         "componentSuccesses" : [
+            {
+               "changed" : true,
+               "columnNumber" : null,
+               "componentType" : "",
+               "created" : false,
+               "createdDate" : "2026-10-11T14:20:20.000+0000",
+               "deleted" : false,
+               "fileName" : "package.xml",
+               "fullName" : "package.xml",
+               "id" : null,
+               "lineNumber" : null,
+               "problem" : null,
+               "problemType" : null,
+               "success" : true
+            }
+         ],
+         "retrieveResult" : null,
+         "runTestResult" : {
+            "apexLogId" : null,
+            "codeCoverage" : [],
+            "codeCoverageWarnings" : [],
+            "failures" : [],
+            "flowCoverage" : [],
+            "flowCoverageWarnings" : [],
+            "numFailures" : 0,
+            "numTestsRun" : 0,
+            "successes" : [],
+            "totalTime" : 0
+         }
+      },
+      "done" : true,
+      "errorMessage" : null,
+      "errorStatusCode" : null,
+      "id" : "0Affj00000U8AiTCAV",
+      "ignoreWarnings" : false,
+      "lastModifiedDate" : "2026-10-11T14:20:21.000+0000",
+      "numberComponentErrors" : 2,
+      "numberComponentsDeployed" : 0,
+      "numberComponentsTotal" : 2,
+      "numberFiles" : 3,
+      "numberTestErrors" : 0,
+      "numberTestsCompleted" : 0,
+      "numberTestsTotal" : 0,
+      "rollbackOnError" : true,
+      "runTestsEnabled" : false,
+      "startDate" : "2026-10-11T14:20:20.000+0000",
+      "stateDetail" : null,
+      "status" : "Failed",
+      "success" : false,
+      "zipSize" : 525
+   },
+   "id" : "0Affj00000U8AiTCAV",
+   "validatedDeployRequestId" : null
+}

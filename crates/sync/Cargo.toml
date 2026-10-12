@@ -1,0 +1,30 @@
+[package]
+name = "orgpunk-sync"
+description = "fetch / pull / push scenarios"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+publish.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[package.metadata.orgpunk]
+layer = "scenario"
+
+[dependencies]
+orgpunk-convert.workspace = true
+orgpunk-sfapi.workspace = true
+orgpunk-auth.workspace = true
+orgpunk-config.workspace = true
+orgpunk-deploy.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+sha2.workspace = true
+thiserror.workspace = true
+zip.workspace = true
+
+[dev-dependencies]
+tempfile.workspace = true
+
+[lints]
+workspace = true

@@ -1,0 +1,84 @@
+# Local development tasks. Install: https://taskfile.dev/installation/
+version: "3"
+
+tasks:
+  default:
+    desc: List tasks
+    silent: true
+    cmds:
+      - task --list
+
+  fmt:
+    desc: Format the code
+    cmds:
+      - cargo fmt --all
+
+  fmt:check:
+    desc: Check formatting (as in CI)
+    cmds:
+      - cargo fmt --all --check
+
+  clippy:
+    desc: Clippy with -D warnings (as in CI)
+    cmds:
+      - cargo clippy --workspace --all-targets --locked -- -D warnings
+
+  test:
+    desc: Test the whole workspace
+    cmds:
+      - cargo test --workspace --locked {{.CLI_ARGS}}
+
+  layers:
+    desc: Check dependency layers cli -> scenario -> core (needs jq)
+    cmds:
+      - ./scripts/check-layers.sh
+
+  check:
+    desc: Everything the CI check job runs
+    cmds:
+      - task: layers
+      - task: fmt:check
+      - task: clippy
+      - task: test
+
+  parity:
+    desc: source -> mdapi parity with SDR on the public corpus (as in CI; needs Node)
+    cmds:
+      - cd scripts/parity && npm ci --no-fund --no-audit
+      - ./scripts/parity/fetch-corpus.sh
+      - cargo build --release --locked -p orgpunk-deploy --example parity_convert
+      - node scripts/parity/parity.mjs --convert target/release/examples/parity_convert {{.CLI_ARGS}}
+
+  build:
+    desc: Debug build of opk
+    cmds:
+      - cargo build --bin opk
+
+  release:
+    desc: Release build of opk (TARGET=<triple> for another target)
+    vars:
+      TARGET: '{{.TARGET | default ""}}'
+    cmds:
+      - cargo build --release --locked --bin opk {{if .TARGET}}--target {{.TARGET}}{{end}}
+
+  smoke:
+    desc: Release build and opk --version
+    deps: [release]
+    cmds:
+      - ./target/release/opk --version
+
+  run:
+    desc: "Run opk with arguments: task run -- <args>"
+    cmds:
+      - cargo run --bin opk -- {{.CLI_ARGS}}
+
+  clean:
+    desc: Remove target/
+    cmds:
+      - cargo clean
+
+  spike:
+    desc: "Stage 2 spike: task spike -- <command> [args]"
+    dir: spike
+    cmds:
+      - cargo run --quiet -- {{.CLI_ARGS}}

@@ -1,0 +1,109 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+permissions:
+  contents: read
+
+env:
+  CARGO_TERM_COLOR: always
+  CARGO_INCREMENTAL: 0
+
+jobs:
+  check:
+    name: check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Toolchain
+        run: rustup toolchain install
+      - uses: Swatinem/rust-cache@v2
+      - name: Dependency layers
+        run: ./scripts/check-layers.sh
+      - name: fmt
+        run: cargo fmt --all --check
+      - name: clippy
+        run: cargo clippy --workspace --all-targets --locked -- -D warnings
+      - name: test
+        run: cargo test --workspace --locked
+
+  # source -> mdapi must match SDR (the library behind sf cli) on public sf projects, plus a
+  # roundtrip mdapi -> source (SDR) -> mdapi (opk). See scripts/parity/parity.mjs.
+  parity:
+    name: SDR parity
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Toolchain
+        run: rustup toolchain install
+      - uses: Swatinem/rust-cache@v2
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: scripts/parity/package-lock.json
+      - name: SDR
+        working-directory: scripts/parity
+        run: npm ci --no-fund --no-audit
+      - name: Corpus cache
+        uses: actions/cache@v4
+        with:
+          path: target/corpus
+          key: corpus-${{ hashFiles('scripts/parity/corpus.txt') }}
+      - name: Corpus
+        run: ./scripts/parity/fetch-corpus.sh
+      - name: Build the converter
+        run: cargo build --release --locked -p orgpunk-deploy --example parity_convert
+      - name: Parity
+        run: node scripts/parity/parity.mjs --convert target/release/examples/parity_convert
+
+  build:
+    name: build (${{ matrix.target }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - target: x86_64-unknown-linux-musl
+            os: ubuntu-latest
+            musl: true
+          - target: aarch64-unknown-linux-musl
+            os: ubuntu-24.04-arm
+            musl: true
+          - target: x86_64-apple-darwin
+            os: macos-15-intel
+          - target: aarch64-apple-darwin
+            os: macos-latest
+          - target: x86_64-pc-windows-msvc
+            os: windows-latest
+            exe: .exe
+    steps:
+      - uses: actions/checkout@v5
+      - name: Toolchain
+        shell: bash
+        run: |
+          rustup toolchain install
+          rustup target add ${{ matrix.target }}
+      - name: musl-tools
+        if: matrix.musl
+        run: sudo apt-get update && sudo apt-get install -y musl-tools
+      - uses: Swatinem/rust-cache@v2
+        with:
+          key: ${{ matrix.target }}
+      - name: Build
+        run: cargo build --release --locked --bin opk --target ${{ matrix.target }}
+      - name: Smoke
+        shell: bash
+        run: ./target/${{ matrix.target }}/release/opk${{ matrix.exe }} --version
+      - uses: actions/upload-artifact@v4
+        with:
+          name: opk-${{ matrix.target }}
+          path: target/${{ matrix.target }}/release/opk${{ matrix.exe }}
+          if-no-files-found: error

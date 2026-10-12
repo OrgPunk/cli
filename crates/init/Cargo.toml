@@ -1,0 +1,24 @@
+[package]
+name = "orgpunk-init"
+description = "opk init scenario"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+publish.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[package.metadata.orgpunk]
+layer = "scenario"
+
+[dependencies]
+orgpunk-config.workspace = true
+orgpunk-repo.workspace = true
+serde_json.workspace = true
+thiserror.workspace = true
+
+[dev-dependencies]
+tempfile.workspace = true
+
+[lints]
+workspace = true

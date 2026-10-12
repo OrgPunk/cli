@@ -1,0 +1,23 @@
+[package]
+name = "orgpunk-repo"
+description = "Git repository access"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+publish.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[package.metadata.orgpunk]
+layer = "core"
+
+[lints]
+workspace = true
+
+[dependencies]
+gix.workspace = true
+ignore.workspace = true
+thiserror.workspace = true
+
+[dev-dependencies]
+tempfile.workspace = true

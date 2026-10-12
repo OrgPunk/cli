@@ -1,0 +1,81 @@
+name: release
+
+# A tag vX.Y.Z builds opk for every platform and publishes a GitHub release with the archives
+# and SHA256SUMS that install.sh downloads.
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: build (${{ matrix.target }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: true
+      matrix:
+        include:
+          - target: x86_64-unknown-linux-musl
+            os: ubuntu-latest
+            musl: true
+          - target: aarch64-unknown-linux-musl
+            os: ubuntu-24.04-arm
+            musl: true
+          - target: x86_64-apple-darwin
+            os: macos-15-intel
+          - target: aarch64-apple-darwin
+            os: macos-latest
+          - target: x86_64-pc-windows-msvc
+            os: windows-latest
+            exe: .exe
+    steps:
+      - uses: actions/checkout@v5
+      - name: Toolchain
+        shell: bash
+        run: |
+          rustup toolchain install
+          rustup target add ${{ matrix.target }}
+      - name: musl-tools
+        if: matrix.musl
+        run: sudo apt-get update && sudo apt-get install -y musl-tools
+      - name: Build
+        run: cargo build --release --locked --bin opk --target ${{ matrix.target }}
+      - name: Version matches the tag
+        shell: bash
+        run: |
+          got="$(./target/${{ matrix.target }}/release/opk${{ matrix.exe }} --version)"
+          [ "$got" = "opk ${GITHUB_REF_NAME#v}" ] || { echo "tag $GITHUB_REF_NAME, binary: $got"; exit 1; }
+      - name: Package
+        shell: bash
+        run: |
+          mkdir dist
+          dir=target/${{ matrix.target }}/release
+          if [ -n "${{ matrix.exe }}" ]; then
+            7z a "dist/opk-${{ matrix.target }}.zip" "./$dir/opk.exe" LICENSE
+          else
+            tar -czf "dist/opk-${{ matrix.target }}.tar.gz" -C "$dir" opk -C "$GITHUB_WORKSPACE" LICENSE
+          fi
+      - uses: actions/upload-artifact@v4
+        with:
+          name: opk-${{ matrix.target }}
+          path: dist/*
+          if-no-files-found: error
+
+  publish:
+    name: publish
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: dist
+          merge-multiple: true
+      - name: Checksums
+        working-directory: dist
+        run: sha256sum opk-* > SHA256SUMS && cat SHA256SUMS
+      - name: Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "$GITHUB_REF_NAME" dist/* --repo "$GITHUB_REPOSITORY" --title "$GITHUB_REF_NAME" --generate-notes

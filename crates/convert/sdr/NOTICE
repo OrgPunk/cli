@@ -1,0 +1,5 @@
+metadataRegistry.json and stdValueSetRegistry.json are copied unmodified from
+@salesforce/source-deploy-retrieve 13.4.5 (lib/src/registry/),
+https://github.com/forcedotcom/source-deploy-retrieve
+
+Copyright (c) 2026 Salesforce, Inc. Licensed under the Apache License 2.0, see LICENSE.txt.

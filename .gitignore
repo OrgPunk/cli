@@ -1,0 +1,33 @@
+# Rust
+target/
+
+# opk / sf cli
+.orgpunk/state/
+.sf/
+.sfdx/
+
+# Secrets
+*.key
+*.pem
+.env
+.env.*
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*~
+
+# Spike: sessions with tokens
+/spike/.sessions/
+
+# Node: SDR parity check (scripts/parity)
+node_modules/
+
+# Local tool settings
+.cowork/

@@ -1,0 +1,18 @@
+# Public sf projects for the SDR parity check: <github owner/repo> <commit>.
+# Pinned so that results only change when opk or this list changes.
+trailheadapps/lwc-recipes c720d47091277e6ff1216768fff1bc2f79901a0e
+trailheadapps/dreamhouse-lwc 1d44f1a1298145c4d92f4269bcc0396e7e375e40
+trailheadapps/ebikes-lwc aa9ee9ddcc7b1df82c25956b6a02f56cd64fd98e
+trailheadapps/apex-recipes 50012075e9fbdbd8b54facde68b21462504528eb
+trailheadapps/coral-cloud 6e05e6cf74da47308d21a263ed0eb8f8236409de
+trailheadapps/easy-spaces-lwc d68a09ff7d17469a24a2f2825d906314ae787181
+trailheadapps/ecars a5e9cc01c2b0fac91e752011c318fb0d2e258e9f
+trailheadapps/visualforce-to-lwc 5076091e6bc07ce2624092f00f94caa0821cbcfa
+jongpie/NebulaLogger b792ac8d8b4eb31b14a164a24951c3cb4125a616
+apex-enterprise-patterns/fflib-apex-common c91fa6f32781c02969dc57d9fd1453478b541f6a
+apex-enterprise-patterns/fflib-apex-mocks d81e9e1833e27e6d704281ae7ffa39cbc304edea
+mitchspano/apex-trigger-actions-framework 5c3793d2b5baaa91b0b5b2b691ab1750ef37fa41
+pozil/sfdc-ui-lookup-lwc 55c9040d5af721775b14f649bfa6ffe803ad5930
+forcedotcom/sfdx-simple 72e65e5cc4f05459b4c96cb7cea528e73b5412ce
+SalesforceFoundation/NPSP 1e9e61908707e00faaef9f25982a85409d4b93e3
+beyond-the-cloud-dev/soql-lib cc067842dd9ac7c272b94653c0487222d2967152
